@@ -4,6 +4,13 @@ function wrap(key, content) {
   return result;
 }
 
+function truncate(state) {
+  while (state.list.length > state.size) {
+    state = remove(state, state.list[0]);
+  }
+  return state;
+}
+
 export function create(size = 10) {
   return {
     size,
@@ -14,15 +21,11 @@ export function create(size = 10) {
 
 export function add(state, item, id) {
   const {size, index, list} = state;
-  var result = Object.assign({
+  return truncate({
     size,
     index: Object.assign({}, index, wrap(id, item)),
     list: [...list, id]
   });
-  while (result.list.length > size) {
-    result = remove(result, result.list[0]);
-  }
-  return result;
 }
 
 export function get(state, id) {
@@ -42,4 +45,10 @@ export function remove(state, id) {
   } else {
     return state;
   }
+}
+
+export function size(state, value) {
+  return truncate(Object.assign({}, state, {
+    size: value
+  }));
 }

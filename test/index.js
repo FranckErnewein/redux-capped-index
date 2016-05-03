@@ -1,5 +1,12 @@
 import { expect } from 'chai';
-import { create, add, remove, get } from '../src/';
+import { create, add, remove, get, size } from '../src/';
+
+function popupate(state, n) {
+  for (let i = 1; i < n + 1; i++) {
+    state = add(state, 'item ' + i, i);
+  }
+  return state;
+}
 
 describe('create', () => {
 
@@ -45,11 +52,9 @@ describe('add', () => {
     });
   });
 
-  it('should add a remove the oldest cause of limit', () => {
+  it('should add after the limit', () => {
     var state = create(5);
-    for (let i = 1; i < 7; i++) {
-      state = add(state, 'item ' + i, i);
-    }
+    state = popupate(state, 6);
     expect(state.index).to.not.have.property('1');
     expect(state.index).to.have.property('2');
     expect(state.index).to.have.property('6');
@@ -63,6 +68,7 @@ describe('get', () => {
   it('should be a function', () => expect(get).to.be.an.instanceOf(Function));
 
   it('should return an item', () => expect(get(add(create(5), 'mike', 42), 42)).to.be.equal('mike'));
+
 });
 
 
@@ -90,6 +96,29 @@ describe('remove', () => {
         '42': 'mike'
       },
       list: [42, 1]
+    });
+  });
+
+});
+
+describe('size', () => {
+
+  it('should be a function', () => expect(size).to.be.an.instanceOf(Function));
+
+  it('should set size', () => expect(size(create(5), 42).size).to.be.equal(42));
+
+  it('should truncate', () => {
+    var state = create(5);
+    state = popupate(state, 5);
+    state = size(state, 3);
+    expect(state).to.be.deep.equal({
+      size: 3,
+      index: {
+        '3': 'item 3',
+        '4': 'item 4',
+        '5': 'item 5'
+      },
+      list: [3, 4, 5]
     });
   });
 

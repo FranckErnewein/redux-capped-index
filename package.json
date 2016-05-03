@@ -1,6 +1,6 @@
 {
   "name": "redux-capped-index",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reducers/Fonctions for Redux to manage a capped index",
   "main": "lib/index.js",
   "scripts": {
