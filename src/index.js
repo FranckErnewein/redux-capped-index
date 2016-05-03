@@ -19,8 +19,7 @@ export function create(size = 10) {
   };
 }
 
-export function add(state, item, id) {
-  const {size, index, list} = state;
+export function add({size, index, list} , item, id) {
   return truncate({
     size,
     index: Object.assign({}, index, wrap(id, item)),
@@ -51,4 +50,8 @@ export function size(state, value) {
   return truncate(Object.assign({}, state, {
     size: value
   }));
+}
+
+export function toArray(state) {
+  return state.list.map(id => state.index[id]);
 }

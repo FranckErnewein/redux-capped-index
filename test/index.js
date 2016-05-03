@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { create, add, remove, get, size } from '../src/';
+import { create, add, remove, get, size, toArray } from '../src/';
 
 function popupate(state, n) {
   for (let i = 1; i < n + 1; i++) {
@@ -120,6 +120,18 @@ describe('size', () => {
       },
       list: [3, 4, 5]
     });
+  });
+
+});
+
+describe('toArray', () => {
+
+  it('should be a function', () => expect(size).to.be.an.instanceOf(Function));
+
+  it('should return an array of item', () => {
+    var state = create(5);
+    state = popupate(state, 3);
+    expect(toArray(state)).to.be.deep.equal(['item 1', 'item 2', 'item 3']);
   });
 
 });
