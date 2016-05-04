@@ -1,8 +1,7 @@
-import {create, add, remove, size} from '../';
+const {create, add, remove, size} = require('../');
 
 function lastPeopleReducer(state = create(5), action) {
-  
-  switch(action.type) {
+  switch (action.type) {
     case 'ADD_USER':
       return add(state, action.newUser, action.newUser.id);
     case 'REMOVE_USER':
@@ -12,5 +11,6 @@ function lastPeopleReducer(state = create(5), action) {
     default:
       return state;
   }
-
 }
+
+exports = lastPeopleReducer;

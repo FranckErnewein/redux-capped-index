@@ -55,3 +55,4 @@ export function size(state, value) {
 export function toArray(state) {
   return state.list.map(id => state.index[id]);
 }
+

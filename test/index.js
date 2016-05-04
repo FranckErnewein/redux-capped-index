@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { create, add, remove, get, size, toArray } from '../src/';
+import { create, add, remove, get, size, toArray, sort } from '../src/';
 
 function popupate(state, n) {
   for (let i = 1; i < n + 1; i++) {
@@ -126,7 +126,7 @@ describe('size', () => {
 
 describe('toArray', () => {
 
-  it('should be a function', () => expect(size).to.be.an.instanceOf(Function));
+  it('should be a function', () => expect(toArray).to.be.an.instanceOf(Function));
 
   it('should return an array of item', () => {
     var state = create(5);
@@ -134,4 +134,29 @@ describe('toArray', () => {
     expect(toArray(state)).to.be.deep.equal(['item 1', 'item 2', 'item 3']);
   });
 
+});
+
+describe.skip('sort', () => {
+
+  it('should be a function', () => expect(sort).to.be.an.instanceOf(Function));
+
+  it('should sort with default JS method on id', () => {
+    var state = create(5);
+    state = add(state, 'Marc', 5);
+    state = add(state, 'Oliver', 4);
+    state = add(state, 'Stark', 2);
+    state = add(state, 'Brian', 3);
+    expect(state.list).to.be.deep.equal([5, 4, 2, 3]);
+    const sorted = sort(state);
+    expect(sorted.list).to.be.deep.equal([2, 3, 4, 5]);
+    expect(state).to.not.be.equal(sorted);
+  });
+
+  it('should return the same state if sort didnt chaneg anything', () => {
+    var state = create(5);
+    state = add(state, 'Marc', 1);
+    state = add(state, 'Oliver', 2);
+    state = add(state, 'Stark', 3);
+    expect(state).to.be.equal(sort(state));
+  });
 });
